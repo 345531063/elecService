@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.maitian.dev.dao.WxUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.cn.maitian.dev.entity.WxUserInfo">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="wx_nickname" jdbcType="VARCHAR" property="wxNickname" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="lottery_times" jdbcType="INTEGER" property="lotteryTimes" />
+    <result column="answer_status" jdbcType="INTEGER" property="answerStatus" />
+    <result column="theme_id" jdbcType="VARCHAR" property="themeId" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+    <result column="job_num" jdbcType="VARCHAR" property="jobNum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, wx_nickname, open_id, phone, lottery_times, answer_status, theme_id, company_id,
+    job_num
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_user_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from wx_user_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.maitian.dev.entity.WxUserInfo">
+    insert into wx_user_info (id, wx_nickname, open_id,
+      phone, lottery_times, answer_status,
+      theme_id, company_id, job_num
+      )
+    values (#{id,jdbcType=VARCHAR}, #{wxNickname,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{lotteryTimes,jdbcType=INTEGER}, #{answerStatus,jdbcType=INTEGER},
+      #{themeId,jdbcType=VARCHAR}, #{companyId,jdbcType=VARCHAR}, #{jobNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.maitian.dev.entity.WxUserInfo">
+    insert into wx_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="wxNickname != null">
+        wx_nickname,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="lotteryTimes != null">
+        lottery_times,
+      </if>
+      <if test="answerStatus != null">
+        answer_status,
+      </if>
+      <if test="themeId != null">
+        theme_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+      <if test="jobNum != null">
+        job_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNickname != null">
+        #{wxNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="lotteryTimes != null">
+        #{lotteryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="answerStatus != null">
+        #{answerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="themeId != null">
+        #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null">
+        #{jobNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.maitian.dev.entity.WxUserInfo">
+    update wx_user_info
+    <set>
+      <if test="wxNickname != null">
+        wx_nickname = #{wxNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="lotteryTimes != null">
+        lottery_times = #{lotteryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="answerStatus != null">
+        answer_status = #{answerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="themeId != null">
+        theme_id = #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null">
+        job_num = #{jobNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.maitian.dev.entity.WxUserInfo">
+    update wx_user_info
+    set wx_nickname = #{wxNickname,jdbcType=VARCHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      lottery_times = #{lotteryTimes,jdbcType=INTEGER},
+      answer_status = #{answerStatus,jdbcType=INTEGER},
+      theme_id = #{themeId,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR},
+      job_num = #{jobNum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectWxUserInfoSelective" parameterType="com.cn.maitian.dev.entity.WxUserInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_user_info
+    where 1=1
+    <if test="jobNum != null">
+      and job_num = #{jobNum,jdbcType=VARCHAR}
+    </if>
+    <if test="id != null">
+      and id = #{id,jdbcType=VARCHAR}
+    </if>
+    <if test="themeId != null">
+      and theme_id = #{themeId,jdbcType=VARCHAR}
+    </if>
+    limit 0 ,1
+  </select>
+  <delete id="deleteAll">
+    delete from wx_user_info
+  </delete>
+  <insert id="batchInsert" >
+    insert into wx_user_info (id, wx_nickname, job_num
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=VARCHAR}, #{item.wxNickname,jdbcType=VARCHAR}, #{item.jobNum,jdbcType=VARCHAR}
+      )
+    </foreach>
+
+  </insert>
+</mapper>

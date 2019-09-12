@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.maitian.dev.dao.UserTestResultMapper">
+  <resultMap id="BaseResultMap" type="com.cn.maitian.dev.entity.UserTestResult">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="theme_id" jdbcType="VARCHAR" property="themeId" />
+    <result column="test_id" jdbcType="VARCHAR" property="testId" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="wx_user_id" jdbcType="VARCHAR" property="wxUserId" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, theme_id, test_id, answer, create_time, wx_user_id, company_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_test_result
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_test_result
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.maitian.dev.entity.UserTestResult">
+    insert into user_test_result (id, theme_id, test_id,
+      answer, create_time, wx_user_id,
+      company_id)
+    values (#{id,jdbcType=VARCHAR}, #{themeId,jdbcType=VARCHAR}, #{testId,jdbcType=VARCHAR},
+      #{answer,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{wxUserId,jdbcType=VARCHAR},
+      #{companyId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.maitian.dev.entity.UserTestResult">
+    insert into user_test_result
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="themeId != null">
+        theme_id,
+      </if>
+      <if test="testId != null">
+        test_id,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="wxUserId != null">
+        wx_user_id,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="themeId != null">
+        #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null">
+        #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserId != null">
+        #{wxUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.maitian.dev.entity.UserTestResult">
+    update user_test_result
+    <set>
+      <if test="themeId != null">
+        theme_id = #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="testId != null">
+        test_id = #{testId,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserId != null">
+        wx_user_id = #{wxUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.maitian.dev.entity.UserTestResult">
+    update user_test_result
+    set theme_id = #{themeId,jdbcType=VARCHAR},
+      test_id = #{testId,jdbcType=VARCHAR},
+      answer = #{answer,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      wx_user_id = #{wxUserId,jdbcType=VARCHAR},
+      company_id = #{companyId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectUserTestResultByThemeId" parameterType="com.cn.maitian.dev.entity.UserTestResult" resultType="java.lang.Integer">
+  select count (1) from (
+    select
+    count(theme_id) id
+    from user_test_result
+    where theme_id = #{themeId,jdbcType=VARCHAR}
+     and  wx_user_id = #{wxUserId,jdbcType=VARCHAR}
+     group by theme_id,wx_user_id
+     )a
+  </select>
+  <insert id="batchInsert" >
+    insert into user_test_result (id, theme_id, test_id,
+      answer, create_time, wx_user_id
+      )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (
+      #{item.id,jdbcType=VARCHAR}, #{item.themeId,jdbcType=VARCHAR}, #{item.testId,jdbcType=VARCHAR},
+      #{item.answer,jdbcType=VARCHAR}, #{item.createTime,jdbcType=VARCHAR}, #{item.wxUserId,jdbcType=VARCHAR}
+      )
+    </foreach>
+
+  </insert>
+
+
+</mapper>

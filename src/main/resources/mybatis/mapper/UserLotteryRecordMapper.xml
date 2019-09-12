@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.maitian.dev.dao.UserLotteryRecordMapper">
+  <resultMap id="BaseResultMap" type="com.cn.maitian.dev.entity.UserLotteryRecord">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="wx_user_id" jdbcType="VARCHAR" property="wxUserId" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="theme_id" jdbcType="VARCHAR" property="themeId" />
+    <result column="lottery_type" jdbcType="INTEGER" property="lotteryType" />
+    <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, open_id, wx_user_id, create_time, nickname, phone, theme_id, lottery_type, company_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_lottery_record
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_lottery_record
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.maitian.dev.entity.UserLotteryRecord">
+    insert into user_lottery_record (id, open_id, wx_user_id,
+      create_time, nickname, phone,
+      theme_id, lottery_type, company_id
+      )
+    values (#{id,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, #{wxUserId,jdbcType=VARCHAR},
+      #{createTime,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{themeId,jdbcType=VARCHAR}, #{lotteryType,jdbcType=INTEGER}, #{companyId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.maitian.dev.entity.UserLotteryRecord">
+    insert into user_lottery_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="openId != null">
+        open_id,
+      </if>
+      <if test="wxUserId != null">
+        wx_user_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="themeId != null">
+        theme_id,
+      </if>
+      <if test="lotteryType != null">
+        lottery_type,
+      </if>
+      <if test="companyId != null">
+        company_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserId != null">
+        #{wxUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="themeId != null">
+        #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="lotteryType != null">
+        #{lotteryType,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        #{companyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.maitian.dev.entity.UserLotteryRecord">
+    update user_lottery_record
+    <set>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxUserId != null">
+        wx_user_id = #{wxUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="themeId != null">
+        theme_id = #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="lotteryType != null">
+        lottery_type = #{lotteryType,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.maitian.dev.entity.UserLotteryRecord">
+    update user_lottery_record
+    set open_id = #{openId,jdbcType=VARCHAR},
+      wx_user_id = #{wxUserId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      theme_id = #{themeId,jdbcType=VARCHAR},
+      lottery_type = #{lotteryType,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectUserLotteryRecord" parameterType="com.cn.maitian.dev.model.UserLotteryModel" resultMap="BaseResultMap">
+    SELECT
+      wui.wx_nickname nickname,
+      wui.job_num,
+      ulr.id,
+      ulr.open_id,
+      ulr.wx_user_id,
+      ulr.create_time,
+      wui.wx_nickname nickname,
+      wui.phone,
+      ulr.theme_id,
+      ulr.lottery_type
+    FROM
+    user_lottery_record ulr
+    LEFT JOIN wx_user_info wui
+    on ulr.wx_user_id = wui.id
+    where 1= 1
+    <if test="wxUserId != null">
+       and ulr.wx_user_id=#{wxUserId}
+    </if>
+    <if test="themeId != null">
+      and ulr.theme_id=#{themeId}
+    </if>
+    <if test="jobNum != null">
+      and wui.job_num=#{jobNum}
+    </if>
+    order by create_time desc
+    limit #{startSize},#{endSize}
+  </select>
+  <select id="selectUserLotteryRecordCount" parameterType="com.cn.maitian.dev.model.UserLotteryModel" resultType="java.lang.Integer">
+    SELECT
+        count(1)
+    FROM
+    user_lottery_record ulr
+    LEFT JOIN wx_user_info wui
+    on ulr.wx_user_id = wui.id
+    where 1= 1
+    <if test="wxUserId != null">
+      and ulr.wx_user_id=#{wxUserId}
+    </if>
+    <if test="themeId != null">
+      and ulr.theme_id=#{themeId}
+    </if>
+    <if test="jobNum != null">
+      and wui.job_num=#{jobNum}
+    </if>
+  </select>
+
+</mapper>
