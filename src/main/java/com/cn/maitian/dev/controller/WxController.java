@@ -5,10 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.cn.maitian.dev.annotation.CheckLogin;
 import com.cn.maitian.dev.constant.ErrorCodeEnum;
 import com.cn.maitian.dev.constant.Response;
-import com.cn.maitian.dev.entity.BackendUser;
-import com.cn.maitian.dev.entity.Oauth2Token;
-import com.cn.maitian.dev.entity.SNSUserInfo;
-import com.cn.maitian.dev.entity.WxUserInfo;
+import com.cn.maitian.dev.entity.*;
+import com.cn.maitian.dev.model.TestInfoModel;
+import com.cn.maitian.dev.model.UserInfoModel;
 import com.cn.maitian.dev.service.WxUserService;
 import com.cn.maitian.dev.util.NetUtil;
 import com.cn.maitian.dev.util.R;
@@ -19,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
@@ -33,6 +33,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "dfny")
+@CrossOrigin
 public class WxController {
 
     @Autowired
@@ -98,6 +99,24 @@ public class WxController {
         response = wxUserService.wxLogin(nickname,jobNum,companyId);
         return response;
     }
+    /***
+     * @Description: 抽奖资格
+     * @Param:
+     * @return:
+     * @Author: steven.zhang
+     * @Date: 2019/9/11
+     */
+    @RequestMapping("/wx/userQualification")
+    public Response userQualification(@RequestBody TestInfoModel wxUserInfo){
+        Response response = new Response();
+        String  wxUserId = wxUserInfo.getWxUserId();
+        if(StringUtils.isEmpty(wxUserId)){
+            response.setResult(ErrorCodeEnum.PARAMISERROR);
+            return  response;
+        }
+        response = wxUserService.userQualification(wxUserInfo);
+        return response;
+    }
     /****
     * @Description: 导入用户信息
     * @Param:
@@ -125,6 +144,19 @@ public class WxController {
      * @Author: steven.zhang
      * @Date: 2019/9/11
      */
+    @RequestMapping("/wx/queryBackendUserList")
+    public Response queryBackendUserList(@RequestBody UserInfoModel userInfoModel){
+        Response response = new Response();
+        response = wxUserService.queryBackendUserList(userInfoModel);
+        return response;
+    }
+    /***
+     * @Description: 登录
+     * @Param:
+     * @return:
+     * @Author: steven.zhang
+     * @Date: 2019/9/11
+     */
     @RequestMapping("/wx/queryCompanyList")
     public Response queryCompanyList(){
         Response response = new Response();
@@ -139,7 +171,7 @@ public class WxController {
      * @Date: 2019/9/11
      */
     @RequestMapping("/backend/login")
-    public Response backendLogin(@RequestBody  BackendUser backendUser){
+    public Response backendLogin(@RequestBody  BackendUser backendUser, HttpServletResponse responsex){
         Response response = new Response();
         String   loginPhone           = backendUser.getPhone();
         String    pwd                 = backendUser.getPwd();
@@ -147,8 +179,16 @@ public class WxController {
             response.setResult(ErrorCodeEnum.PARAMISERROR);
             return  response;
         }
-        response = wxUserService.backendLogin(loginPhone,pwd);
+        response = wxUserService.backendLogin(loginPhone,pwd,responsex);
         return response;
+    }
+    @RequestMapping(value = "/setCookies",method = RequestMethod.GET)
+    public String setCookies(HttpServletResponse response){
+        //HttpServerletRequest 装请求信息类
+        //HttpServerletRespionse 装相应信息的类
+        Cookie cookie=new Cookie("sessionId","CookieTestInfo");
+        response.addCookie(cookie);
+        return "获得cookies信息成功";
     }
     /**
      * 向指定URL发送GET方法的请求

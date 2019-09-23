@@ -18,6 +18,23 @@ public class ThemeActivity extends BaseEntity{
     private Integer testRandomNum;
 
     private Integer status = -1;
+    private String  describe;//描述
+    private String createTime;
+    public String getDescribe() {
+        return describe;
+    }
+
+    public void setDescribe(String describe) {
+        this.describe = describe;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
     public String getId() {
         return id;

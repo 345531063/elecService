@@ -127,6 +127,35 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="updateUserTestClean" parameterType="com.cn.maitian.dev.entity.WxUserInfo">
+    update wx_user_info
+    <set>
+      <if test="wxNickname != null">
+        wx_nickname = #{wxNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="lotteryTimes != null">
+        lottery_times = #{lotteryTimes,jdbcType=INTEGER},
+      </if>
+      <if test="answerStatus != null">
+        answer_status = #{answerStatus,jdbcType=INTEGER},
+      </if>
+      <if test="themeId != null">
+        theme_id = #{themeId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="jobNum != null">
+        job_num = #{jobNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+  </update>
   <update id="updateByPrimaryKey" parameterType="com.cn.maitian.dev.entity.WxUserInfo">
     update wx_user_info
     set wx_nickname = #{wxNickname,jdbcType=VARCHAR},
@@ -153,7 +182,35 @@
     <if test="themeId != null">
       and theme_id = #{themeId,jdbcType=VARCHAR}
     </if>
+    <if test="wxNickname != null">
+      and wx_nickname = #{wxNickname,jdbcType=VARCHAR}
+    </if>
     limit 0 ,1
+  </select>
+  <select id="selectUserInfoList" parameterType="com.cn.maitian.dev.entity.WxUserInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from wx_user_info
+    where 1=1
+    <if test="jobNum != null">
+      and job_num like concat('%',#{jobNum,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="wxNickname != null">
+      and wx_nickname like concat('%',#{wxNickname,jdbcType=VARCHAR},'%')
+    </if>
+    limit #{startSize},#{endSize}
+  </select>
+  <select id="selectUserInfoListCount" parameterType="com.cn.maitian.dev.entity.WxUserInfo" resultType="java.lang.Integer">
+    select
+     count(1)
+    from wx_user_info
+    where 1=1
+    <if test="jobNum != null">
+      and job_num like concat('%',#{jobNum,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="wxNickname != null">
+      and wx_nickname like concat('%',#{wxNickname,jdbcType=VARCHAR},'%')
+    </if>
   </select>
   <delete id="deleteAll">
     delete from wx_user_info

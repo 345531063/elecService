@@ -5,6 +5,7 @@ import com.cn.maitian.dev.entity.TestInfo;
 import com.cn.maitian.dev.entity.ThemeActivity;
 import com.cn.maitian.dev.entity.UserTestResult;
 import com.cn.maitian.dev.model.BaseModel;
+import com.cn.maitian.dev.model.TestInfoModel;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public interface TestQuestionService {
      * @Author: steven.zhang
      * @Date: 2019/9/10
      */
-    public Response recordUserTestResult(List<UserTestResult> userTestResult,String themeId,String wxUserId);
+    public Response recordUserTestResult(List<UserTestResult> userTestResult,String themeId,String wxUserId,String companyId);
 
     /***
      * @Description: 随机抽取题根据主题中设置的随机抽题数
@@ -74,5 +75,12 @@ public interface TestQuestionService {
      * @Author: steven.zhang
      * @Date: 2019/9/12
      */
-    public Response queryTestInfoList(BaseModel baseModel);
+    public Response queryTestInfoList(TestInfoModel baseModel);
+
+    Response deleteTestInfo(TestInfo themeActivity);
+
+    Response deleteThemeActivity(ThemeActivity themeActivity);
+
+    Response queryThemeActivity(ThemeActivity themeActivity);
+
 }

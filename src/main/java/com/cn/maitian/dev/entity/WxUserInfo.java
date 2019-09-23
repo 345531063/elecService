@@ -1,6 +1,6 @@
 package com.cn.maitian.dev.entity;
 
-public class WxUserInfo {
+public class WxUserInfo extends BaseEntity {
     private String id;
 
     private String wxNickname;
@@ -9,7 +9,7 @@ public class WxUserInfo {
 
     private String phone;
 
-    private Integer lotteryTimes;
+    private Integer lotteryTimes ;
 
     private Integer answerStatus;
 

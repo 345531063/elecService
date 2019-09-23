@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/com.cn.xjk.payService.iml" filepath="$PROJECT_DIR$/com.cn.xjk.payService.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../sdk-core/core.iml" filepath="$PROJECT_DIR$/../sdk-core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../crm/product.iml" filepath="$PROJECT_DIR$/../crm/product.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../cecd-rpc-sdk/src/java/rpc.iml" filepath="$PROJECT_DIR$/../cecd-rpc-sdk/src/java/rpc.iml" />
     </modules>
   </component>
 </project>

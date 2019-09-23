@@ -33,4 +33,5 @@ public interface LoterryService {
      */
     public Response modifyLotteryInfo(UserLotteryRecord testInfo);
 
+    Response queryLotteryInfo(UserLotteryModel themeActivity);
 }

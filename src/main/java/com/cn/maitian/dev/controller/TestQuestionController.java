@@ -8,6 +8,7 @@ import com.cn.maitian.dev.entity.TestInfo;
 import com.cn.maitian.dev.entity.ThemeActivity;
 import com.cn.maitian.dev.entity.UserTestResult;
 import com.cn.maitian.dev.model.BaseModel;
+import com.cn.maitian.dev.model.TestInfoModel;
 import com.cn.maitian.dev.model.UserTestResultModel;
 import com.cn.maitian.dev.service.TestQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.List;
 */
 @RestController
 @RequestMapping(value="dfny")
+@CrossOrigin(origins = "*",maxAge = 3600)
 public class TestQuestionController {
     @Autowired
     TestQuestionService testQuestionService;
@@ -41,13 +43,28 @@ public class TestQuestionController {
         String name      = themeActivity.getName();
         String startTime = themeActivity.getStartTime();
         String endTime   = themeActivity.getEndTime();
-
-        if(null == name || "".equals(name) || null == startTime || "".equals(startTime)
-           || null == endTime ||"".equals(endTime)){
-            response.setResult(ErrorCodeEnum.PARAMISERROR);
-            return  response;
+        if(StringUtils.isEmpty(themeActivity.getId())){
+            if(null == name || "".equals(name) || null == startTime || "".equals(startTime)
+                    || null == endTime ||"".equals(endTime)){
+                response.setResult(ErrorCodeEnum.PARAMISERROR);
+                return  response;
+            }
         }
         response = testQuestionService.addOrModifyThemeActivity(themeActivity);
+        return response;
+    }
+    /***
+     * @Description: 删除考题
+     * @Param:
+     * @return:
+     * @Author: steven.zhang
+     * @Date: 2019/9/12
+     */
+    @RequestMapping(value = "/testQuestion/deleteThemeActivity",method = RequestMethod.POST)
+    @CheckLogin(value=true)
+    public Response deleteThemeActivity(@RequestBody ThemeActivity themeActivity){
+        Response response = new Response();
+        response = testQuestionService.deleteThemeActivity(themeActivity);
         return response;
     }
     /*** 
@@ -62,6 +79,49 @@ public class TestQuestionController {
     public Response queryThemeActivityList(@RequestBody BaseModel themeActivity){
         Response response = new Response();
         response = testQuestionService.queryThemeActivityList(themeActivity);
+        return response;
+    }
+    /***
+     * @Description: 获取s试题信息
+     * @Param:
+     * @return:
+     * @Author: steven.zhang
+     * @Date: 2019/9/12
+     */
+    @RequestMapping(value = "/testQuestion/queryThemeActivity",method = RequestMethod.POST)
+    @CheckLogin(value=true)
+    public Response queryThemeActivity(@RequestBody ThemeActivity themeActivity){
+        Response response = new Response();
+        response = testQuestionService.queryThemeActivity(themeActivity);
+        return response;
+    }
+    /***
+     * @Description: 获取s试题信息
+     * @Param:
+     * @return:
+     * @Author: steven.zhang
+     * @Date: 2019/9/12
+     */
+    @RequestMapping(value = "/testQuestion/queryTestInfo",method = RequestMethod.POST)
+    @CheckLogin(value=true)
+    public Response queryTestInfo(@RequestBody TestInfo themeActivity){
+        Response response = new Response();
+        response = testQuestionService.queryTestInfo(themeActivity);
+        return response;
+    }
+
+    /***
+     * @Description: 删除考题
+     * @Param:
+     * @return:
+     * @Author: steven.zhang
+     * @Date: 2019/9/12
+     */
+    @RequestMapping(value = "/testQuestion/deleteTestInfo",method = RequestMethod.POST)
+    @CheckLogin(value=true)
+    public Response deleteTestInfo(@RequestBody TestInfo themeActivity){
+        Response response = new Response();
+        response = testQuestionService.deleteTestInfo(themeActivity);
         return response;
     }
 
@@ -82,7 +142,7 @@ public class TestQuestionController {
         String  themeId       =  testInfo.getThemeId();
 
         if(null == title || "".equals(title) || null == answer || "".equals(answer)
-                || null == content ||"".equals(content)||null == themeId ||"".equals(themeId)){
+                || null == content ||"".equals(content)){
             response.setResult(ErrorCodeEnum.PARAMISERROR);
             return  response;
         }
@@ -107,7 +167,7 @@ public class TestQuestionController {
             response.setResult(ErrorCodeEnum.PARAMISERROR);
             return  response;
         }
-        response = testQuestionService.recordUserTestResult(userTestResultModel.getUserTestResultList(),themeId,wxUserId);
+        response = testQuestionService.recordUserTestResult(userTestResultModel.getUserTestResultList(),themeId,wxUserId,companyId);
         return response;
     }
     /****
@@ -137,8 +197,9 @@ public class TestQuestionController {
      * @Date: 2019/9/11
      */
     @RequestMapping("/testQuestion/backendTestList")
+    @CrossOrigin
     @CheckLogin(value=true)
-    public Response backendTestList(@RequestBody BaseModel baseModel){
+    public Response backendTestList(@RequestBody TestInfoModel baseModel){
         Response response = new Response();
         response = testQuestionService.queryTestInfoList(baseModel);
         return response;

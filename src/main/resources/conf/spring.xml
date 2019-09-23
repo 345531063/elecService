@@ -69,4 +69,7 @@
 	</bean>
 	
 	<import resource="classpath:/conf/spring-mybatis.xml" />
+	<mvc:interceptors>
+	<bean class="com.cn.maitian.dev.interceptor.LoginCheckInterceptor" />
+	</mvc:interceptors>
 </beans>

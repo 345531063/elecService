@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface WxUserInfoMapper {
+     List<WxUserInfo> selectUserInfoList(WxUserInfo userLotteryRecord) ;
+
     int deleteByPrimaryKey(String id);
 
     int insert(WxUserInfo record);
@@ -25,4 +27,8 @@ public interface WxUserInfoMapper {
     int batchInsert(List<WxUserInfo> list);
 
     int deleteAll();
+
+    int selectUserInfoListCount(WxUserInfo userLotteryRecord);
+
+    int updateUserTestClean(WxUserInfo wxUserInfo);
 }

@@ -3,7 +3,11 @@ package com.cn.maitian.dev.service;
 import com.cn.maitian.dev.constant.Response;
 import com.cn.maitian.dev.entity.TestInfo;
 import com.cn.maitian.dev.entity.WxUserInfo;
+import com.cn.maitian.dev.model.TestInfoModel;
+import com.cn.maitian.dev.model.UserInfoModel;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 
 public interface WxUserService {
 
@@ -26,11 +30,15 @@ public interface WxUserService {
     /**
      * 后台登录
      * */
-    Response backendLogin(String loginPhone, String pwd);
+    Response backendLogin(String loginPhone, String pwd, HttpServletResponse responsex);
 
     Response wxLogin(String loginPhone, String jobNum, String companyId);
 
     Response queryCompanyList();
 
     Response importWxUserInfo(MultipartFile file);
+
+    Response queryBackendUserList(UserInfoModel userInfoModel);
+
+    Response userQualification(TestInfoModel wxUserInfo);
 }

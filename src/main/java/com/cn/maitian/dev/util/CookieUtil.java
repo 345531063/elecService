@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class CookieUtil {
  
-    public static final String COOKIE_NAME = "code";
+    public static final String COOKIE_NAME = "Token";
  
     public static String generateCookieByUserId(Integer userId, Integer type) {
         Long currentTime = System.currentTimeMillis();
@@ -27,6 +27,8 @@ public class CookieUtil {
  
     public static void setCookieValueIntoResponse(HttpServletResponse response, String value) {
         Cookie cookie = new Cookie(COOKIE_NAME, value);
+        cookie.setPath("/");
+        cookie.setMaxAge(3600);
         response.addCookie(cookie);
     }
 }

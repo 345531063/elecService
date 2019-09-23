@@ -21,7 +21,9 @@ public enum ErrorCodeEnum {
     NOUSERINFO(2,"11015" ,"not dredge" ,"用户名密码错误" ),
     USERNOTEXIST(2,"11016" ,"not dredge" ,"员工不存在" ),
     ISNOTEXCELFILE(2,"11017" ,"not dredge" ,"不是excel文件" ),
-    NONLOGIN(2, "11018" ,"not dredge" ,"没有登录" );
+    NONLOGIN(2, "11018" ,"not dredge" ,"没有登录" ),
+    CANLOTTERY(2, "11019" ,"not dredge" ,"可抽奖" ),
+    CANASWER(2, "11020" ,"not dredge" ,"可答题" );
     private int id;
     private String code;
     private String enText;

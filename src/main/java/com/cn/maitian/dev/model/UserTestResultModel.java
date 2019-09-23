@@ -9,6 +9,9 @@ public class UserTestResultModel {
     private String themeId;
     private String companyId;
 
+
+
+    private List<UserTestResult> userTestResultList;
     public String getCompanyId() {
         return companyId;
     }
@@ -16,9 +19,6 @@ public class UserTestResultModel {
     public void setCompanyId(String companyId) {
         this.companyId = companyId;
     }
-
-    private List<UserTestResult> userTestResultList;
-
     public String getWxUserId() {
         return wxUserId;
     }

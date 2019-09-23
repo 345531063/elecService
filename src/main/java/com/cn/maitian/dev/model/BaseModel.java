@@ -3,8 +3,8 @@ package com.cn.maitian.dev.model;
 public class BaseModel {
     private String wxUserId;
     private String themeId;
-    private int     pageSize;//页大小
-    private int     pageIndex;//页码
+    private int     pageSize = 5;//页大小
+    private int     pageIndex =1;//页码
     private int     startSize;//页大小
     private int     endSize;//页码
 

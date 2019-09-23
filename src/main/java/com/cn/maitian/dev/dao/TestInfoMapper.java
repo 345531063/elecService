@@ -25,4 +25,6 @@ public interface TestInfoMapper {
     int selectMaxTestInfoByThemeId(TestInfo testInfo);
 
     int queryTestInfoListCount(TestInfo userLotteryRecord);
+
+    List<TestInfo> randomTestInfoList(TestInfo testInfo);
 }

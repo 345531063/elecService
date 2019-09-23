@@ -22,30 +22,49 @@
   </select>
   <select id="queryTestInfoList" parameterType="com.cn.maitian.dev.entity.TestInfo" resultMap="BaseResultMap">
     select
-    id, theme_id, title, type, content, question_num
+    <include refid="Base_Column_List" />
     from test_info
-    where 1 =1
+    where status = 1
     <if test="themeId != null">
       and  theme_id = #{themeId}
     </if>
+    <if test="title != null">
+      and  title like concat('%', #{title},'%')
+    </if>
+    order by create_time desc
+    limit #{startSize},#{endSize}
   </select>
   <select id="queryTestInfoListCount" parameterType="com.cn.maitian.dev.entity.TestInfo" resultType="java.lang.Integer">
     select
       count(1)
     from test_info
-    where 1 =1
+    where status = 1
     <if test="themeId != null">
       and  theme_id = #{themeId}
     </if>
+    <if test="title != null">
+      and  title like concat('%', #{title},'%')
+    </if>
   </select>
+
+  <select id="randomTestInfoList" parameterType="com.cn.maitian.dev.entity.TestInfo" resultMap="BaseResultMap">
+    SELECT
+     id, theme_id, title, type, content, create_time, question_num
+    FROM
+        test_info where status =1
+        ORDER BY RAND()
+    LIMIT #{endSize}
+  </select>
+
   <select id="selectMaxTestInfoByThemeId" parameterType="com.cn.maitian.dev.entity.TestInfo" resultType="java.lang.Integer">
     select
     ifnull(max(question_num),0)
     from test_info
-    where 1 =1
+    where status = 1
     <if test="themeId != null">
       and  theme_id = #{themeId}
     </if>
+
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
@@ -138,6 +157,9 @@
       </if>
       <if test="questionNum != null">
         question_num = #{questionNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != -1">
+        status = #{status,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}

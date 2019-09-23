@@ -3,18 +3,13 @@ package com.cn.maitian.dev.service.impl;
 import com.cn.maitian.dev.constant.AwardsLevelEnum;
 import com.cn.maitian.dev.constant.ErrorCodeEnum;
 import com.cn.maitian.dev.constant.Response;
-import com.cn.maitian.dev.dao.BackendUserMapper;
-import com.cn.maitian.dev.dao.CompanyInfoMapper;
-import com.cn.maitian.dev.dao.WxUserInfoMapper;
-import com.cn.maitian.dev.entity.BackendUser;
-import com.cn.maitian.dev.entity.CompanyInfo;
-import com.cn.maitian.dev.entity.UserLotteryRecord;
-import com.cn.maitian.dev.entity.WxUserInfo;
+import com.cn.maitian.dev.dao.*;
+import com.cn.maitian.dev.entity.*;
+import com.cn.maitian.dev.model.TestInfoModel;
+import com.cn.maitian.dev.model.UserInfoModel;
+import com.cn.maitian.dev.model.UserLotteryModel;
 import com.cn.maitian.dev.service.WxUserService;
-import com.cn.maitian.dev.util.Constants;
-import com.cn.maitian.dev.util.ExecuteDataExcelToOracle;
-import com.cn.maitian.dev.util.LogUtil;
-import com.cn.maitian.dev.util.StrUtils;
+import com.cn.maitian.dev.util.*;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -34,10 +32,16 @@ public class WxUserServiceImpl implements WxUserService {
 
     @Autowired
     CompanyInfoMapper companyInfoMapper;
+
+    @Autowired
+    TestInfoMapper testInfoMapper;
+    @Autowired
+    UserLotteryRecordMapper userLotteryRecordMapper;
+    @Autowired
+    ThemeActivityMapper themeActivityMapper;
     @Override
     public Response queryUserLotteryQualification(WxUserInfo testInfo) {
-
-        return null;
+       return null;
     }
 
     @Override
@@ -47,9 +51,10 @@ public class WxUserServiceImpl implements WxUserService {
     }
 
     @Override
-    public Response backendLogin(String loginPhone, String pwd) {
+    public Response backendLogin(String loginPhone, String pwd, HttpServletResponse responsex) {
         Response response = new Response();
         try{
+            responsex.setCharacterEncoding("utf-8");
             BackendUser backendUser  = new BackendUser();
             backendUser.setPhone(loginPhone);
             backendUser.setPwd(pwd);
@@ -60,15 +65,17 @@ public class WxUserServiceImpl implements WxUserService {
             }
             String token = StrUtils.generate("");
             String freshToken = StrUtils.generate("");
-            Constants.TOKENMAP.put(backendUser1.getId(),token);
+            CookieUtil.setCookieValueIntoResponse(responsex,token);
             JSONObject result = new JSONObject();
             result.put("token",token);
             result.put("freshToken",freshToken);
             response.setResultV1(result);
+
+            //responsex.getWriter().write(JSONObject.fromObject(response).toString());
         }catch (Exception e){
             LogUtil.error(this.getClass(),"抽象方法异常"+e.getMessage());
         }
-        return response;
+       return response;
     }
     /**** 
     * @Description: 微信登录则返回一个wxUserId
@@ -78,11 +85,12 @@ public class WxUserServiceImpl implements WxUserService {
     * @Date: 2019/9/11 
     */
     @Override
-    public Response wxLogin(String loginPhone, String jobNum, String companyId) {
+    public Response wxLogin(String wxNickname, String jobNum, String companyId) {
         Response response = new Response();
         try{
             WxUserInfo wxUserInfo = new WxUserInfo();
             wxUserInfo.setJobNum(jobNum);
+            wxUserInfo.setWxNickname(wxNickname);
              wxUserInfo = wxUserInfoMapper.selectWxUserInfoSelective(wxUserInfo);
             String id = null;
             if(null == wxUserInfo){//如果不存在就新增
@@ -140,17 +148,90 @@ public class WxUserServiceImpl implements WxUserService {
             String extString = fileName.substring(fileName.lastIndexOf("."));
             List<WxUserInfo> list = ExecuteDataExcelToOracle.loadExcel(extString,file.getInputStream());
             //清空之间的数据
-            int status = wxUserInfoMapper.deleteAll();
-            if(status > 0 ){
-                int i = wxUserInfoMapper.batchInsert(list);
-                if(i > 0 ){
-                    response.setResult(ErrorCodeEnum.SUCCESS);
-                }
+            wxUserInfoMapper.deleteAll();
+            int i = wxUserInfoMapper.batchInsert(list);
+            if(i > 0 ){
+                response.setResult(ErrorCodeEnum.SUCCESS);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("插入数据库失败");
+        }
+        return response;
+    }
+
+    @Override
+    public Response queryBackendUserList(UserInfoModel userInfoModel) {
+
+        Response response = new Response();
+        try{
+            int      pageSize  = userInfoModel.getPageSize();
+            int      pageIndex = userInfoModel.getPageIndex();
+            int      startSize = (pageIndex -1)*pageSize;
+
+            WxUserInfo userLotteryRecord = new WxUserInfo();
+            userLotteryRecord.setEndSize(pageSize);
+            userLotteryRecord.setStartSize(startSize);
+            userLotteryRecord.setWxNickname(userInfoModel.getWxNickname());
+            userLotteryRecord.setJobNum(userInfoModel.getJobNum());
+            List<WxUserInfo> list = wxUserInfoMapper.selectUserInfoList(userLotteryRecord);
+            JSONObject result = new JSONObject();
+            result.put("list",list);
+            result.put("total",wxUserInfoMapper.selectUserInfoListCount(userLotteryRecord));
+            response.setResultV1(result);
+        }catch (Exception e){
+            LogUtil.error(this.getClass(),e.getMessage());
+        }
+        return response;
+        }
+
+    @Override
+    public Response userQualification(TestInfoModel wxUserInfo) {
+        Response response = new Response();
+        try {
+            //随机获取当前themeId 并返回
+            ThemeActivity themeActivityParamA = new ThemeActivity();
+            String startTime = DateUtil.getDateTime(new Date());
+            themeActivityParamA.setStartTime(startTime);
+            themeActivityParamA.setStatus(1);
+            themeActivityParamA.setStartSize(0);
+            themeActivityParamA.setEndSize(1);
+            //themeActivityParam.setEndTime(endTime);
+            List<ThemeActivity> themeActivityDateList =   themeActivityMapper.selectThemeActivityByDate(themeActivityParamA);
+            if(null == themeActivityDateList || themeActivityDateList.size() == 0){
+                response.setResult(ErrorCodeEnum.ACTIVITYISOVER);
+                return response;
+            }
+            String  themeId  = themeActivityDateList.get(0).getId();
+            //查询出该用户是否已经答题
+            WxUserInfo record = new WxUserInfo();
+            record.setId(wxUserInfo.getWxUserId());
+            //record.setThemeId(themeId);
+            WxUserInfo userInfo = wxUserInfoMapper.selectWxUserInfoSelective(record);
+            int  isAnswer = 0;//用户答题次数
+            int  isLottery = 0;
+            if(null != userInfo && themeId.equals(userInfo.getThemeId())){//表示答过题
+                isAnswer = userInfo.getAnswerStatus();
+                isLottery = userInfo.getLotteryTimes();
+            }
+            UserLotteryModel userLotteryModel  = new UserLotteryModel();
+            userLotteryModel.setWxUserId(userInfo.getId());
+            userLotteryModel.setThemeId(themeId);
+            userLotteryModel.setStartSize(0);
+            userLotteryModel.setEndSize(1);
+            List<UserLotteryRecord> list = userLotteryRecordMapper.selectUserLotteryRecord(userLotteryModel);
+            int  answerTimes = themeActivityDateList.get(0).getAnswerTimes();//答题次数
+
+            JSONObject result = new JSONObject();
+            result.put("remainderAnswer",answerTimes-isAnswer);//剩余次数
+            result.put("isLottery",isLottery > 0 ? 1:0);//是否可抽奖 0 不可以 1 可以
+            result.put("alreadyLottery",list.size()>0 ? 1 : 0);//是否已抽奖 0 没有 1 已经抽奖
+
+            result.put("themeId",themeActivityDateList.get(0).getId());
+            response.setResultV1(result);
+        }catch (Exception e){
+            LogUtil.error(this.getClass(),"queryUserLotteryQualification 异常"+e.getMessage());
         }
         return response;
     }

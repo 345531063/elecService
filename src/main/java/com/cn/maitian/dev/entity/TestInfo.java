@@ -19,6 +19,16 @@ public class TestInfo extends BaseEntity {
 
     private Integer questionNum;
 
+    private int     status = -1;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public String getId() {
         return id;
     }

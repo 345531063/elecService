@@ -8,6 +8,7 @@ import com.cn.maitian.dev.dao.UserTestResultMapper;
 import com.cn.maitian.dev.dao.WxUserInfoMapper;
 import com.cn.maitian.dev.entity.*;
 import com.cn.maitian.dev.model.BaseModel;
+import com.cn.maitian.dev.model.TestInfoModel;
 import com.cn.maitian.dev.service.TestQuestionService;
 import com.cn.maitian.dev.util.DateUtil;
 import com.cn.maitian.dev.util.LogUtil;
@@ -45,10 +46,18 @@ public class TestQuestionServiceImpl implements TestQuestionService {
         Response response = new Response();
         String  id = themeActivity.getId();
         //将所有数据装都更高未禁用
-        themeActivityMapper.modifyThemeActivityAll();
+
+
         //将当前活动主题改为启动
-        themeActivity.setStatus(1);
+
         if(null == id || "".equals(id)){
+            themeActivity.setStatus(1);
+            themeActivityMapper.modifyThemeActivityAll();
+            WxUserInfo wxUserInfo = new WxUserInfo();
+            wxUserInfo.setAnswerStatus(0);
+            wxUserInfo.setLotteryTimes(0);
+            wxUserInfo.setThemeId(null);
+            wxUserInfoMapper.updateUserTestClean(wxUserInfo);
             id = StrUtils.generate("");
             themeActivity.setId(id);
             int i = themeActivityMapper.insert(themeActivity);
@@ -56,6 +65,14 @@ public class TestQuestionServiceImpl implements TestQuestionService {
                 response.setResult(ErrorCodeEnum.SUCCESS);
             }
         }else{
+            if(themeActivity.getStatus() == 1){//只有状态为开启时 才禁用其他
+                WxUserInfo wxUserInfo = new WxUserInfo();
+                wxUserInfo.setAnswerStatus(0);
+                wxUserInfo.setLotteryTimes(0);
+                wxUserInfo.setThemeId(null);
+                wxUserInfoMapper.updateUserTestClean(wxUserInfo);
+                themeActivityMapper.modifyThemeActivityAll();
+            }
             themeActivityMapper.updateByPrimaryKeySelective(themeActivity);
         }
         response.setResult(ErrorCodeEnum.SUCCESS);
@@ -72,6 +89,7 @@ public class TestQuestionServiceImpl implements TestQuestionService {
     public Response addOrModifyTestInfo(TestInfo testInfo) {
         Response response = new Response();
         String  id = testInfo.getId();
+        testInfo.setCreateTime(DateUtil.getDateTime(new Date()));
         if(null == id || "".equals(id)){
             id = StrUtils.generate("");
             testInfo.setId(id);
@@ -106,7 +124,7 @@ public class TestQuestionServiceImpl implements TestQuestionService {
     * @Date: 2019/9/10 
     */
     @Override
-    public Response recordUserTestResult(List<UserTestResult> userTestResultList,String themeId,String wxUserId) {
+    public Response recordUserTestResult(List<UserTestResult> userTestResultList,String themeId,String wxUserId,String companyId) {
         Response response = new Response();
         try{
             for(UserTestResult userTestResult :userTestResultList){
@@ -114,21 +132,29 @@ public class TestQuestionServiceImpl implements TestQuestionService {
                 userTestResult.setWxUserId(wxUserId);
                 userTestResult.setId(StrUtils.generate(""));
                 userTestResult.setCreateTime(DateUtil.getDateTime(new Date()));
+                userTestResult.setCompanyId(companyId);
             }
             //判断当前答题次数是否已经达到上限,是否过期
             ThemeActivity themeActivityParam = new ThemeActivity();
             String startTime = DateUtil.getDateTime(new Date());
             themeActivityParam.setStartTime(startTime);
             themeActivityParam.setStatus(1);
+
             List<ThemeActivity> themeActivityDate =   themeActivityMapper.selectThemeActivityByDate(themeActivityParam);
             if(null == themeActivityDate || themeActivityDate.size() == 0){
                 response.setResult(ErrorCodeEnum.ACTIVITYISOVER);
                 return response;
             }
-            WxUserInfo userInfo = wxUserInfoMapper.selectByPrimaryKey(wxUserId);
+            WxUserInfo paramUserInfo = new WxUserInfo();
+//            paramUserInfo.setThemeId(themeId);
+            paramUserInfo.setId(wxUserId);
+            WxUserInfo userInfo = wxUserInfoMapper.selectWxUserInfoSelective(paramUserInfo);
+            int  isAnswer    = 0;
+            if(themeId.equals(userInfo.getThemeId()) ){//之前答过一次题 才会存在相同的themeId
+                  isAnswer    = userInfo.getAnswerStatus();
+            }
             int  answerTimes = themeActivityDate.get(0).getAnswerTimes();//答题次数
-            int  isAnswer    = userInfo.getAnswerStatus();
-            if(isAnswer > 0 && answerTimes <= (isAnswer+1) ){//表示已经答题
+            if(isAnswer > 0 && answerTimes <= (isAnswer) ){//表示已经答题
                 response.setResult(ErrorCodeEnum.ALREADLYANSWER);
                 return response;
             }
@@ -137,7 +163,6 @@ public class TestQuestionServiceImpl implements TestQuestionService {
             //修改用户答题情况
             userInfo.setAnswerStatus(userInfo.getAnswerStatus()+1);
             userInfo.setThemeId(themeId);
-            userInfo.setLotteryTimes(0);
             int isLottery  = 0 ;//0没有资格抽奖 1有资格抽奖
             JSONObject jsonObject = new JSONObject();
             int  isTrueNum = 0;//答题正确数
@@ -160,8 +185,8 @@ public class TestQuestionServiceImpl implements TestQuestionService {
                 if(null != themeActivity){
                     int lotteryAnswerLimit = themeActivity.getLotteryAnswerLimit();//答对题目数 100%设置
                     int  testRandomNum = themeActivity.getTestRandomNum();//随机出题数
-                    if(lotteryAnswerLimit >100) lotteryAnswerLimit=100;//防止哪些乱设置的人
-                    int  lotteryAnswerLimitResult = lotteryAnswerLimit*testRandomNum/100;//抽奖资格数=百分比*随机出题数
+                    if(lotteryAnswerLimit >testRandomNum) lotteryAnswerLimit=testRandomNum;//防止哪些乱设置的人
+                    int  lotteryAnswerLimitResult = lotteryAnswerLimit;//抽奖资格数=百分比*随机出题数
                     if(lotteryAnswerLimitResult <= isTrueNum){//不能按百分比进行比对 这样需要去查询一次库
                         isLottery =1;
                         userInfo.setLotteryTimes(1);
@@ -197,55 +222,60 @@ public class TestQuestionServiceImpl implements TestQuestionService {
             }
             String  themeId  = themeActivityDateList.get(0).getId();
             //查询出该用户是否已经答题
-            UserTestResult record = new UserTestResult();
-            record.setWxUserId(wxUserId);
-            record.setThemeId(themeId);
-            WxUserInfo userInfo = wxUserInfoMapper.selectByPrimaryKey(wxUserId);
+            WxUserInfo record = new WxUserInfo();
+            record.setId(wxUserId);
+           // record.setThemeId(themeId);
+            WxUserInfo userInfo = wxUserInfoMapper.selectWxUserInfoSelective(record);
+            int  isAnswer    = 0;
+            if(themeId.equals(userInfo.getThemeId()) ){//之前答过一次题 才会存在相同的themeId
+                isAnswer    = userInfo.getAnswerStatus();
+            }
             int  answerTimes = themeActivityDateList.get(0).getAnswerTimes();//答题次数
-            int  isAnswer    = userInfo.getAnswerStatus();
             if(isAnswer > 0 && answerTimes <= isAnswer ){//表示已经答题
                 response.setResult(ErrorCodeEnum.ALREADLYANSWER);
                 return response;
             }
             //随机抽取题 获取这个主题下所有考试题 暂时先这样写 后面量大了再优化
-            TestInfo testInfo = new TestInfo();
-            testInfo.setThemeId(themeId);
-            List<TestInfo> list = testInfoMapper.queryTestInfoList(testInfo);
+
             //获取主题随机出题数
             int  testRandomNum = 5;//随机出题数
             ThemeActivity themeActivity = themeActivityMapper.selectByPrimaryKey(themeId);
             if(null != themeActivity){
                 testRandomNum = themeActivity.getTestRandomNum();
             }
-            //随机抽取几套题
-            Random random = new Random();
-            int  checkTestRandomNumCount = 0;
-            boolean isEnd = true;
-            Map<String,String> existMap = new HashMap<>();
-            List<TestInfo> resultList = new ArrayList<>();//这里可以用set 为了方便统一用list
-            if(null != list && list.size() > 0){
-                if(list.size() <= testRandomNum){//如果题库数据不足时 抽出的数据永远小于等于设置的随机出题数时 将全部题加入
-                    resultList = list;
-                }else{
-                    while(isEnd){
-                        int  indexValue = random.nextInt(list.size());
-                        TestInfo testInfoA = list.get(indexValue);
-                        if(existMap.containsKey(existMap)){
-                            continue;
-                        }
-                        resultList.add(testInfoA);
-                        checkTestRandomNumCount +=1;
-                        if(checkTestRandomNumCount == testRandomNum){//当添加数据达到主题设置的随机数出题数时就退出
-                            isEnd = false;
-                        }
-                        existMap.put(testInfoA.getId(),testInfoA.getId());
-                    }
-                }
-
-            }
+            TestInfo testInfo = new TestInfo();
+            testInfo.setEndSize(testRandomNum);
+            List<TestInfo> list = testInfoMapper.randomTestInfoList(testInfo);
+//            //随机抽取几套题
+//            Random random = new Random();
+//            int  checkTestRandomNumCount = 0;
+//            boolean isEnd = true;
+//            Map<String,String> existMap = new HashMap<>();
+//            List<TestInfo> resultList = new ArrayList<>();//这里可以用set 为了方便统一用list
+//            if(null != list && list.size() > 0){
+//                if(list.size() <= testRandomNum){//如果题库数据不足时 抽出的数据永远小于等于设置的随机出题数时 将全部题加入
+//                    resultList = list;
+//                }else{
+//                    while(isEnd){
+//                        int  indexValue = random.nextInt(list.size());
+//                        TestInfo testInfoA = list.get(indexValue);
+//                        if(existMap.containsKey(existMap)){
+//                            continue;
+//                        }
+//                        resultList.add(testInfoA);
+//                        checkTestRandomNumCount +=1;
+//                        if(checkTestRandomNumCount == testRandomNum){//当添加数据达到主题设置的随机数出题数时就退出
+//                            isEnd = false;
+//                        }
+//                        existMap.put(testInfoA.getId(),testInfoA.getId());
+//                    }
+//                }
+//
+//            }
             JSONObject result = new JSONObject();
-            result.put("testInfoList",resultList);
+            result.put("testInfoList",list);
             result.put("themeId",themeId);
+            result.put("themeDescription",themeActivity.getDescribe());
             response.setResultV1(result);
         }catch (Exception e){
             LogUtil.error(this.getClass(),e.getMessage());
@@ -275,7 +305,7 @@ public class TestQuestionServiceImpl implements TestQuestionService {
         return response;
     }
     @Override
-    public Response queryTestInfoList(BaseModel baseModel) {
+    public Response queryTestInfoList(TestInfoModel baseModel) {
         Response response = new Response();
         try{
             int      pageSize  = baseModel.getPageSize();
@@ -285,6 +315,7 @@ public class TestQuestionServiceImpl implements TestQuestionService {
             TestInfo userLotteryRecord = new TestInfo();
             userLotteryRecord.setEndSize(pageSize);
             userLotteryRecord.setStartSize(startSize);
+            userLotteryRecord.setTitle(baseModel.getTitle());
             List<TestInfo> list = testInfoMapper.queryTestInfoList(userLotteryRecord);
             JSONObject result = new JSONObject();
             result.put("list",list);
@@ -295,4 +326,50 @@ public class TestQuestionServiceImpl implements TestQuestionService {
         }
         return response;
     }
+
+    @Override
+    public Response deleteTestInfo(TestInfo testInfo) {
+        Response response = new Response();
+        try{
+            testInfo.setStatus(0);
+            int i = testInfoMapper.updateByPrimaryKeySelective(testInfo);
+            if(i > 0 ){
+                response.setResult(ErrorCodeEnum.SUCCESS);
+                return response;
+            }
+        }catch (Exception e){
+            LogUtil.error(this.getClass(),e.getMessage());
+        }
+        return response;
+    }
+
+    @Override
+    public Response deleteThemeActivity(ThemeActivity themeActivity) {
+        Response response = new Response();
+        try{
+            themeActivity.setStatus(2);
+            int i = themeActivityMapper.updateByPrimaryKeySelective(themeActivity);
+            if(i > 0 ){
+                response.setResult(ErrorCodeEnum.SUCCESS);
+                return response;
+            }
+        }catch (Exception e){
+            LogUtil.error(this.getClass(),e.getMessage());
+        }
+        return response;
+    }
+
+    @Override
+    public Response queryThemeActivity(ThemeActivity themeActivity) {
+        Response response = new Response();
+        try{
+            String  id = themeActivity.getId();
+            ThemeActivity testInfoResult = themeActivityMapper.selectByPrimaryKey(id);
+            response.setResultV1(testInfoResult);
+        }catch (Exception e){
+            LogUtil.error(this.getClass(),e.getMessage());
+        }
+        return response;
+    }
+
 }

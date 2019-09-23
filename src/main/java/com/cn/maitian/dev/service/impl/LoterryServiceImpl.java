@@ -63,7 +63,7 @@ public class LoterryServiceImpl implements LoterryService {
             }
 
             wxUserInfo = wxUserInfoMapper.selectByPrimaryKey(themeActivity.getWxUserId());
-            int  level = new Random().nextInt(100);//1%的几率中奖 一百个数中抽取值5个奖项
+            int  level = new Random().nextInt(100);//1%0的几率中奖 一百个数中抽取值5个奖项
             int lotteryType = AwardsLevelEnum.getAwardsLevelEnum(level).getId();
             //如果用户没有抽过奖 则记录
             themeActivity.setOpenId(wxUserInfo.getOpenId());
@@ -115,6 +115,24 @@ public class LoterryServiceImpl implements LoterryService {
         try{
             int i  = userLotteryRecordMapper.updateByPrimaryKeySelective(testInfo);
             if(i  > 0 ){
+                response.setResult(ErrorCodeEnum.SUCCESS);
+            }
+        }catch (Exception e){
+            LogUtil.error(this.getClass(),"queryLotteryList 异常 "+e.getMessage());
+        }
+        return response;
+    }
+
+    @Override
+    public Response queryLotteryInfo(UserLotteryModel themeActivity) {
+        Response response = new Response();
+        try{
+            themeActivity.setStartSize(0);
+            themeActivity.setEndSize(1);
+            List<UserLotteryRecord> i  = userLotteryRecordMapper.selectUserLotteryRecord(themeActivity);
+            if(i.size() > 0){
+                response.setResultV1(i.get(0));
+            }else{
                 response.setResult(ErrorCodeEnum.SUCCESS);
             }
         }catch (Exception e){

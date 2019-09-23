@@ -4,7 +4,74 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/../crm/pom.xml" />
+        <option value="$PROJECT_DIR$/../sdk-core/pom.xml" />
+        <option value="$PROJECT_DIR$/../cecd-rpc-sdk/src/java/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/ce-dependency/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/framework/framework-core-gc/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/framework/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/monitor/dubbo-simple/dubbo-monitor-simple/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/monitor/dubbo-simple/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-authoritycs/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-authoritycs/service-authoritycs-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-authoritycs/service-authoritycs-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cicc/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cicc/service-cicc-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cicc/service-cicc-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscolumformat/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscolumformat/service-cmscolumformat-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscolumformat/service-cmscolumformat-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentGroup/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentGroup/service-cmscontentGroup-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentGroup/service-cmscontentGroup-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentformat/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentformat/service-cmscontentformat-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentformat/service-cmscontentformat-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cocreation/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cocreation/service-cocreation-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-cocreation/service-cocreation-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-crumbs/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-crumbs/service-crumbs-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-crumbs/service-crumbs-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-downloadVideo/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-downloadVideo/service-downloadVideo-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-downloadVideo/service-downloadVideo-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-illegalword/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-illegalword/service-illegalword-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-illegalword/service-illegalword-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-jobseo/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-jobseo/service-jobseo-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-jobseo/service-jobseo-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-mapformat/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-mapformat/service-mapformat-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-mapformat/service-mapformat-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-peopledigital/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-peopledigital/service-peopledigital-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-peopledigital/service-peopledigital-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-sitetool/appservice-sitetool-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-sitetool/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-statistics/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-statistics/service-statistics-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-statistics/service-statistics-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-swagger/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-swagger/service-swagger-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-swagger/service-swagger-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-universalform/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-universalform/service-universalform-api/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/service-universalform/service-universalform-provider/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/tool/perf/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/service/tool/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/serviceCenter/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/serviceCenter/sc-site/pom.xml" />
+        <option value="$PROJECT_DIR$/../cms_saas_plugin/srv/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">

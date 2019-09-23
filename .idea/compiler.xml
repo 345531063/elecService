@@ -6,11 +6,118 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="product" />
+        <module name="core" />
+        <module name="rpc" />
         <module name="com.cn.xjk.payService" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="appservice-sitetool-provider" target="1.7" />
+      <module name="ce-dependency" target="1.7" />
       <module name="com.cn.xjk.payService" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="dubbo-monitor-simple" target="1.6" />
+      <module name="dubbo-simple" target="1.6" />
+      <module name="ebiz-parent" target="1.5" />
+      <module name="ebiz-parent (1)" target="1.5" />
+      <module name="ebiz-parent (2)" target="1.7" />
+      <module name="framework-core-gc" target="1.7" />
+      <module name="framework-project" target="1.7" />
+      <module name="perf" target="1.7" />
+      <module name="product" target="1.8" />
+      <module name="rpc" target="1.8" />
+      <module name="sc-site" target="1.7" />
+      <module name="service-authoritycs" target="1.7" />
+      <module name="service-authoritycs-api" target="1.7" />
+      <module name="service-authoritycs-provider" target="1.7" />
+      <module name="service-cicc" target="1.7" />
+      <module name="service-cicc-api" target="1.7" />
+      <module name="service-cicc-provider" target="1.7" />
+      <module name="service-cmscolumformat" target="1.7" />
+      <module name="service-cmscolumformat-api" target="1.7" />
+      <module name="service-cmscolumformat-provider" target="1.7" />
+      <module name="service-cmscontentformat" target="1.7" />
+      <module name="service-cmscontentformat-api" target="1.7" />
+      <module name="service-cmscontentformat-provider" target="1.7" />
+      <module name="service-cmscontentGroup" target="1.7" />
+      <module name="service-cmscontentGroup-api" target="1.7" />
+      <module name="service-cmscontentGroup-provider" target="1.7" />
+      <module name="service-cocreation" target="1.7" />
+      <module name="service-cocreation-api" target="1.7" />
+      <module name="service-cocreation-provider" target="1.7" />
+      <module name="service-crumbs" target="1.7" />
+      <module name="service-crumbs-api" target="1.7" />
+      <module name="service-crumbs-provider" target="1.7" />
+      <module name="service-downloadVideo" target="1.7" />
+      <module name="service-downloadvideo-api" target="1.5" />
+      <module name="service-downloadvideo-provider" target="1.5" />
+      <module name="service-illegalword" target="1.7" />
+      <module name="service-illegalword-api" target="1.7" />
+      <module name="service-illegalword-provider" target="1.7" />
+      <module name="service-jobseo" target="1.7" />
+      <module name="service-jobseo-api" target="1.7" />
+      <module name="service-jobseo-provider" target="1.7" />
+      <module name="service-mapformat" target="1.7" />
+      <module name="service-mapformat-api" target="1.7" />
+      <module name="service-mapformat-provider" target="1.7" />
+      <module name="service-peopledigital" target="1.7" />
+      <module name="service-peopledigital-api" target="1.7" />
+      <module name="service-peopledigital-provider" target="1.7" />
+      <module name="service-project" target="1.7" />
+      <module name="service-sitetool" target="1.7" />
+      <module name="service-statistics" target="1.7" />
+      <module name="service-statistics-api" target="1.7" />
+      <module name="service-statistics-provider" target="1.7" />
+      <module name="service-swagger" target="1.7" />
+      <module name="service-swagger-api" target="1.7" />
+      <module name="service-swagger-provider" target="1.7" />
+      <module name="service-universalform" target="1.7" />
+      <module name="service-universalform-api" target="1.7" />
+      <module name="service-universalform-provider" target="1.7" />
+      <module name="serviceCenter-project" target="1.7" />
+      <module name="static-resource" target="1.7" />
+      <module name="tool-project" target="1.7" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="appservice-sitetool-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="core" options="-parameters" />
+      <module name="framework-core-gc" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="perf" options="-bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar&quot; -verbose" />
+      <module name="product" options="-parameters" />
+      <module name="rpc" options="-parameters" />
+      <module name="sc-site" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-authoritycs-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-authoritycs-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cicc-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cicc-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cmscolumformat-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cmscolumformat-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cmscontentGroup-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cmscontentGroup-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cmscontentformat-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cmscontentformat-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cocreation-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-cocreation-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-crumbs-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-crumbs-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-illegalword-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-illegalword-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-jobseo-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-jobseo-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-mapformat-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-mapformat-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-peopledigital-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-peopledigital-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-statistics-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-statistics-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-swagger-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-swagger-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-universalform-api" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="service-universalform-provider" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+      <module name="static-resource" options="-verbose -bootclasspath &quot;C:/Program Files/Java/jdk1.8.0_211/jre/lib/rt.jar;C:/Program Files/Java/jdk1.8.0_211/jre/lib/jce.jar&quot;" />
+    </option>
   </component>
 </project>

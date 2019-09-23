@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/../cecd-rpc-sdk/src/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/ce-dependency" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/framework" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/framework/framework-core-gc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/monitor/dubbo-simple" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/monitor/dubbo-simple/dubbo-monitor-simple" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-authoritycs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-authoritycs/service-authoritycs-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-authoritycs/service-authoritycs-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cicc" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cicc/service-cicc-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cicc/service-cicc-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscolumformat" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscolumformat/service-cmscolumformat-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscolumformat/service-cmscolumformat-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentGroup" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentGroup/service-cmscontentGroup-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentGroup/service-cmscontentGroup-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentformat" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentformat/service-cmscontentformat-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cmscontentformat/service-cmscontentformat-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cocreation" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cocreation/service-cocreation-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-cocreation/service-cocreation-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-crumbs" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-crumbs/service-crumbs-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-crumbs/service-crumbs-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-downloadVideo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-downloadVideo/service-downloadVideo-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-downloadVideo/service-downloadVideo-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-illegalword" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-illegalword/service-illegalword-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-illegalword/service-illegalword-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-jobseo" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-jobseo/service-jobseo-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-jobseo/service-jobseo-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-mapformat" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-mapformat/service-mapformat-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-mapformat/service-mapformat-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-peopledigital" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-peopledigital/service-peopledigital-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-peopledigital/service-peopledigital-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-sitetool" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-sitetool/appservice-sitetool-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-statistics" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-statistics/service-statistics-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-statistics/service-statistics-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-swagger" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-swagger/service-swagger-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-swagger/service-swagger-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-universalform" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-universalform/service-universalform-api" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/service-universalform/service-universalform-provider" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/tool" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/service/tool/perf" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/serviceCenter" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/serviceCenter/sc-site" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../cms_saas_plugin/srv" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../crm" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../sdk-core" charset="UTF-8" />
   </component>
 </project>
